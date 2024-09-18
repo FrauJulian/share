@@ -29,28 +29,6 @@ namespace Program
                                   AverageReview = product.Review.Average(),
                               }).GroupBy(product => product.Category).ToList();
 
-            var productReviews = (from product in products
-                                  select new
-                                  {
-                                      ProductID = product.ProductID,
-                                      Name = product.Name,
-                                      AverageReview = product.Review.Average()
-                                  }).ToList();
-
-            var averagePrice = (from product in products
-                                select product.Price).Average();
-
-            var overallPrice = (from product in products
-                                select product.Price * product.Amount).Sum();
-
-            var electronicDevicesOverThousand = (from product in products
-                                                 where product.Category == "Elektronik" && product.Price > 1000
-                                                 select product).ToList();
-
-            var expensiveProduct = (from product in products
-                                    orderby product.Price
-                                    select product).Last();
-
             foreach (var category in categories)
             {
                 Console.WriteLine($"Kategorie: {category.Key}");
@@ -63,6 +41,14 @@ namespace Program
 
                 Console.WriteLine(" ");
             }
+
+            var productReviews = (from product in products
+                                  select new
+                                  {
+                                      ProductID = product.ProductID,
+                                      Name = product.Name,
+                                      AverageReview = product.Review.Average()
+                                  }).ToList();
 
             foreach (var product in productReviews)
             {
@@ -79,13 +65,34 @@ namespace Program
 
             Console.WriteLine(" ");
 
+            var averagePrice = (from product in products
+                                select product.Price).Average();
+
             Console.WriteLine($"Der durchschnittliche Preis aller gelisteten Produkte ist {averagePrice}!");
+
+            Console.WriteLine(" ");
+
+            var overallPrice = (from product in products
+                                select product.Price * product.Amount).Sum();
+
             Console.WriteLine($"Der Preis aller gelisteten Produkte ist {overallPrice}!");
+
+            Console.WriteLine(" ");
+
+            var electronicDevicesOverThousand = (from product in products
+                                                 where product.Category == "Elektronik" && product.Price > 1000
+                                                 select product).ToList();
 
             foreach (var product in electronicDevicesOverThousand)
             {
                 Console.WriteLine($"Das Produkt mit der ID {product.ProductID} und dem Namen {product.Name} hat einen Preis über 1000! (Preis: {product.Price})");
             }
+
+            Console.WriteLine(" ");
+
+            var expensiveProduct = (from product in products
+                                    orderby product.Price
+                                    select product).Last();
 
             Console.WriteLine($"Das Produkt mit der ID {expensiveProduct.ProductID} und dem Namen {expensiveProduct.Name} ist das teuerste Produkt mit einem Preis von {expensiveProduct.Price}!");
         }
