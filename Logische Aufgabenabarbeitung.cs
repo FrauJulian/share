@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace Program
 {
     class Program
@@ -16,23 +14,20 @@ namespace Program
             };
 
             PrintInformation(products);
-
         }
 
         private static void PrintInformation(List<Product> products)
         {
             var categories = (from product in products
-                             orderby product.Price descending
-                             select new
-                             {
-                                 ProductID = product.ProductID,
-                                 Name = product.Name,
-                                 Category = product.Category,
-                                 Price = product.Price,
-                                 Review = product.Review,
-                                 Amount = product.Amount,
-                                 AverageReview = product.Review.Average(),
-                             }).GroupBy(product => product.Category).ToList();
+                              orderby product.Price descending
+                              select new
+                              {
+                                  ProductID = product.ProductID,
+                                  Name = product.Name,
+                                  Category = product.Category,
+                                  Price = product.Price,
+                                  AverageReview = product.Review.Average(),
+                              }).GroupBy(product => product.Category).ToList();
 
             var productReviews = (from product in products
                                   select new
@@ -42,7 +37,7 @@ namespace Program
                                       AverageReview = product.Review.Average()
                                   }).ToList();
 
-            var averagePrice = (from product in products 
+            var averagePrice = (from product in products
                                 select product.Price).Average();
 
             var overallPrice = (from product in products
@@ -95,23 +90,24 @@ namespace Program
             Console.WriteLine($"Das Produkt mit der ID {expensiveProduct.ProductID} und dem Namen {expensiveProduct.Name} ist das teuerste Produkt mit einem Preis von {expensiveProduct.Price}!");
         }
 
-    class Product
-    {
-        public int ProductID { get; set; }
-        public string Name { get; set; }
-        public string Category { get; set; }
-        public decimal Price { get; set; }
-        public List<int> Review { get; set; }
-        public int Amount { get; set; }
-
-        public Product(int productID, string name, string category, decimal price, List<int> review, int amount)
+        class Product
         {
-            ProductID = productID;
-            Name = name;
-            Category = category;
-            Price = price;
-            Review = review;
-            Amount = amount;
+            public int ProductID { get; set; }
+            public string Name { get; set; }
+            public string Category { get; set; }
+            public decimal Price { get; set; }
+            public List<int> Review { get; set; }
+            public int Amount { get; set; }
+
+            public Product(int productID, string name, string category, decimal price, List<int> review, int amount)
+            {
+                ProductID = productID;
+                Name = name;
+                Category = category;
+                Price = price;
+                Review = review;
+                Amount = amount;
+            }
         }
     }
 }
