@@ -36,7 +36,7 @@ namespace Program
         private static void PriceOverThounds(List<Product> products)
         {
             var electronicProducts = (from product in products
-                                      where product.Category == "Elektronik" && product.Price > 1000
+                                      where product.Category == "Elektronik" && product.Price >= 1000
                                       select product).ToList();
 
             foreach (var product in electronicProducts)
@@ -47,7 +47,7 @@ namespace Program
 
         private static void AveragePrice(List<Product> products)
         {
-            var averagePrice = (from product in products 
+            var averagePrice = (from product in products
                                 select product.Price).Average();
 
             Console.WriteLine($"Der Durchschnittliche Preis aller gelisteten Produkte ist {averagePrice}!");
@@ -58,13 +58,14 @@ namespace Program
             var productReviews = (from product in products
                                   select new
                                   {
-                                      Product = product,
+                                      ProductID = product.ProductID,
+                                      Name = product.Name,
                                       AverageReview = product.Review.Average()
                                   }).ToList();
 
             foreach (var product in productReviews)
             {
-                Console.WriteLine($"Das Produkt mit der ID {product.Product.ProductID} und dem Namen {product.Product.Name} hat eine durchschnittliche Bewertung von {product.AverageReview}!");
+                Console.WriteLine($"Das Produkt mit der ID {product.ProductID} und dem Namen {product.Name} hat eine durchschnittliche Bewertung von {product.AverageReview}!");
             }
         }
 
@@ -101,7 +102,8 @@ namespace Program
             var productReviews = (from product in products
                                   select new
                                   {
-                                      Product = product,
+                                      ProductID = product.ProductID,
+                                      Name = product.Name,
                                       AverageReview = product.Review.Average()
                                   }).ToList();
 
@@ -109,7 +111,7 @@ namespace Program
             {
                 if (product.AverageReview >= 4)
                 {
-                    Console.WriteLine($"Das Produkt mit der ID {product.Product.ProductID} und dem Namen {product.Product.Name} hat eine durchschnittliche Bewertung von {product.AverageReview}!");
+                    Console.WriteLine($"Das Produkt mit der ID {product.ProductID} und dem Namen {product.Name} hat eine durchschnittliche Bewertung von {product.AverageReview}!");
                 }
             }
         }
@@ -131,7 +133,8 @@ namespace Program
             var productReviews = (from product in products
                                   select new
                                   {
-                                      Product = product,
+                                      ProductID = product.ProductID,
+                                      Name = product.Name,
                                       AverageReview = product.Review.Average()
                                   }).ToList();
 
@@ -139,7 +142,7 @@ namespace Program
             {
                 if (product.AverageReview == 5)
                 {
-                    Console.WriteLine($"Das Produkt mit der ID {product.Product.ProductID} und dem Namen {product.Product.Name} hat eine Bewertung von {product.AverageReview}!");
+                    Console.WriteLine($"Das Produkt mit der ID {product.ProductID} und dem Namen {product.Name} hat eine Bewertung von {product.AverageReview}!");
                 }
             }
         }
